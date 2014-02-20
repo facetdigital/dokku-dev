@@ -1,0 +1,12 @@
+#!/bin/sh
+
+if [ -z "$1" ]; then
+  echo "Usage: dokku-setup-repo <app-name>"
+  exit -1
+else
+  if grep -q dokku.me .git/config; then
+    echo "Repository already setup for dokku deployment"
+  else
+    git remote add dokku dokku@dokku.me:$1
+  fi
+fi

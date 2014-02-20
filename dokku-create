@@ -1,0 +1,27 @@
+#!/bin/sh
+
+echo "Bringing up a Vagrant VM."
+vagrant up
+echo "Vagrant VM is ready."
+
+if [ -f ~/.ssh/id_rsa.pub]; then
+  echo "Installing $USER's ssh key."
+  cat ~/.ssh/id_rsa.pub | vagrant ssh -c "sudo sshcommand acl-add dokku $USER"
+else
+  echo
+  echo "ERROR: $USER does not have a ~/.ssh/id_rsa.pub key."
+  echo
+  exit -1
+fi
+
+if grep -q dokku.me ~/.ssh/config; then
+  echo "VM ssh config already installed."
+else
+  echo "Installing ssh config to VM."
+  mkdir -p ~/.ssh
+  echo >> ~/.ssh/config
+  echo "########## Dokku ##########" >> ~/.ssh/config
+  vagrant ssh-config | sed s/default/dokku.me/ | sed s/vagrant/dokku/ | grep -v IdentityFile >> ~/.ssh/config
+  echo "  RequestTTY yes" >> ~/.ssh/config
+  echo >> ~/.ssh/config
+fi

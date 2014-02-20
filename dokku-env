@@ -1,0 +1,2 @@
+alias dokku='ssh dokku.me'
+alias dokku-deploy='git push dokku HEAD:master'
