@@ -7,16 +7,21 @@ We assume you have already installed [VirutalBox](https://www.virtualbox.org/) a
 ## Setting up the Dokku Dev VM
 
 * Checkout this repository. For this example, we'll assume a `~/src` directory:
+
   ```bash
   $ cd ~/src
   $ git clone git@github.com:facetdigital/dokku-dev.git
   ```
+
 * Move into the project directory:
+
   ```bash
   $ cd ~/src/dokku-dev
   $ ./dokku-create
   ```
+
 * When this finishes, you have a Ubuntu VirutalBox VM running Dokku, managed by Vagrant. You can now manage this with commands such as:
+
   ```bash
   $ vagrant ssh       # log into the VM
   $ vagrant halt      # stop the VM
@@ -24,8 +29,11 @@ We assume you have already installed [VirutalBox](https://www.virtualbox.org/) a
   $ vagrant destroy   # completely destroy the VM
   $ ./dokku-create    # re-build VM after destroying it
   ```
+
 * This VM is set to have the name `dokku.me`, which should always resolve to `127.0.0.1`, as should all `*.dokku.com` URLs. The VM will be port-mapped to listen for HTTP connections on port `8080` and hosts all your apps in Dokku containers, routing requests to them via virtual hosting, using domain names like: `myapp.dokku.me`.
+
 * Your development host will also be setup to ssh into the VM as the `dokku` user to issue Dokku commands, by adding something like the following to your `~/.ssh/config` file:
+
   ```
   ########## Dokku ##########
   Host dokku.me
@@ -39,7 +47,9 @@ We assume you have already installed [VirutalBox](https://www.virtualbox.org/) a
     LogLevel FATAL
     RequestTTY yes
   ```
+
 * This means you can `ssh dokku.me help` from anywhere on your system (not just this directory) to issue a Dokku command such as `help` to the VM.
+
 * It also means you can now deploy to Dokku using the appropriate `git push` and remote repository reference to `dokku.me` (more on this later for the unfamiliar).
 
 ## Individual App Project Setup
