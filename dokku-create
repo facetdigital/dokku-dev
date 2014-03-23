@@ -4,7 +4,7 @@ echo "Bringing up a Vagrant VM."
 vagrant up
 echo "Vagrant VM is ready."
 
-if [ -f ~/.ssh/id_rsa.pub]; then
+if [ -f ~/.ssh/id_rsa.pub ]; then
   echo "Installing $USER's ssh key."
   cat ~/.ssh/id_rsa.pub | vagrant ssh -c "sudo sshcommand acl-add dokku $USER"
 else
